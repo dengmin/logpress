@@ -5,8 +5,25 @@ from django import forms as forms
 from django.contrib.contenttypes.models import ContentType
 from django.utils.encoding import force_unicode
 from django.forms.util import ErrorDict
-from blog.models import Comment
+from blog.models import Post,Page,Comment
 import datetime
+
+class PostForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(PostForm, self).__init__(*args, **kwargs)
+        self.fields['content'].widget = forms.Textarea(attrs={'id':'content','cols':90,'rows':20})
+    class Media:
+        js= (
+             '/static/kindeditor/kindeditor-min.js',
+             '/static/kindeditor/lang/zh_CN.js',
+             '/static/kindeditor/textarea.js',
+             )
+    class Meata:
+        model = Post
+
+class PageForm(PostForm):
+    class Meata:
+        model = Page
 
 class CommentForm(forms.Form):
     author = forms.CharField(widget=forms.TextInput(attrs={'id':'author'}),max_length=50)
@@ -18,7 +35,6 @@ class CommentForm(forms.Form):
     object_pk = forms.CharField(widget=forms.HiddenInput)
 
     parent_id = forms.IntegerField(widget = forms.HiddenInput,required = False)
-    mail_notify = forms.BooleanField(initial = False, required = False)
    
     def __init__(self, target_object, data=None, initial=None):
         self.target_object = target_object
@@ -43,7 +59,6 @@ class CommentForm(forms.Form):
             weburl     = self.cleaned_data["url"],
             content=self.clean_comment(),
             date  = datetime.datetime.now(),
-            mail_notify=self.cleaned_data["mail_notify"],
             is_public    = True,
             parent_id    = self.cleaned_data["parent_id"],
         )

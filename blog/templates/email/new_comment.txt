@@ -1,0 +1,11 @@
+文章<b>{{comment.object.title}}</b> 有了新的评论<br/>
+{{settings.BLOG_DOMAIN}}{{comment.object.get_absolute_url}}
+<p/>
+作者：{{comment.author}} (IP: {{comment.ip_address}})<br/>
+电子邮件： {{comment.email}}<br/>
+URL： {{comment.weburl}}<br/>
+评论：<br/>
+{{comment.content|safe}}
+
+<p/>
+点击回复 {{settings.BLOG_DOMAIN}}{{comment.get_absolute_url}}

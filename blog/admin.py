@@ -6,23 +6,7 @@ from django import forms
 from django.db import models
 
 from blog.models import *
-
-class PostForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super(PostForm, self).__init__(*args, **kwargs)
-        self.fields['content'].widget = forms.Textarea(attrs={'id':'content','cols':90,'rows':20})
-    class Media:
-        js= (
-             '/static/kindeditor/kindeditor-min.js',
-             '/static/kindeditor/lang/zh_CN.js',
-             '/static/kindeditor/textarea.js',
-             )
-    class Meata:
-        model = Post
-
-class PageForm(PostForm):
-    class Meata:
-        model = Page
+from blog.forms import PageForm,PostForm
 
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name','parent','desc','count')

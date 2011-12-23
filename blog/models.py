@@ -48,12 +48,10 @@ class Comment(MPTTModel):
     
     parent = models.ForeignKey('self', null=True, blank=True,
                                related_name = 'children')
-    mail_notify = models.BooleanField(default = False,verbose_name=u'邮件通知')
-
     # Metadata about the comment
     ip_address  = models.IPAddressField( blank=True, null=True,verbose_name=u'ip地址')
     is_public   = models.BooleanField(default=True)
-    date = models.DateTimeField(verbose_name=u'发布日期')
+    date = models.DateTimeField(editable=False,verbose_name=u'发布日期')
     useragent=models.CharField(max_length=300,editable=False)
     content_type   = models.ForeignKey(ContentType,editable=False)
     object_pk      = models.PositiveIntegerField(editable=False)
@@ -67,6 +65,7 @@ class Comment(MPTTModel):
     def get_absolute_url(self, anchor_pattern="#comment-%(id)s"):
         return self.get_content_object_url() + (anchor_pattern % self.__dict__)
     
+    @property
     def object(self):
         model = ContentType.objects.get(pk = self.content_type_id).model_class()
         return model.objects.get(pk = self.object_pk)
@@ -231,8 +230,8 @@ class Link(models.Model):
 class Blog:
     
     def __init__(self):
-        self.blogtitle = OptionSet.get('blogtitle', 'logpress -- sae')
-        self.subtitle = OptionSet.get('subtitle','a simple blog named youflog')
+        self.blogtitle = OptionSet.get('blogtitle', 'LogPress')
+        self.subtitle = OptionSet.get('subtitle','a simple blog named logpress')
         self.sitekeywords = OptionSet.get('sitekeywords', 'blog,sae,django,python,youflog')
         self.sitedescription = OptionSet.get('sitedescription', 'a blog system')
         self.theme_name = OptionSet.get('theme_name','classic')

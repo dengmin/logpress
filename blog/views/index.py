@@ -12,7 +12,7 @@ from blog.models import *
 from blog.tagging.models import TaggedItem
 from blog.forms import CommentForm
 from blog.blogutils import render,render_to_theme,paginator_objects
-
+import blog.signals as signals
 import re
 
 def get_comment_cookie_meta(request):
@@ -92,6 +92,13 @@ def post_coment(request):
     else:
         comment.is_public=False
     comment.save()
+    
+    #send email
+    signals.comment_was_submit.send(
+        sender  = comment.__class__,
+        comment = comment                             
+    )
+    
     response = HttpResponseRedirect(comment.get_absolute_url())
     try:
         response.set_cookie('author', comment.author, max_age = 31536000)

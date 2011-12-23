@@ -179,7 +179,6 @@ CREATE TABLE `blog_comment` (
   `weburl` varchar(200) NOT NULL,
   `content` longtext NOT NULL,
   `parent_id` int(11) DEFAULT NULL,
-  `mail_notify` tinyint(1) NOT NULL,
   `ip_address` char(15) DEFAULT NULL,
   `is_public` tinyint(1) NOT NULL,
   `date` datetime NOT NULL,
