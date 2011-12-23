@@ -1,0 +1,9 @@
+{%if archives%}
+	{%for month in archives%}
+	<li>
+		<a href="/archives/{{ month|date:"Y/m" }}" title='{{month.year}}年{{month.month}}月'>
+			{{month.year}}年{{month.month}}月
+		</a>
+	</li>
+	{%endfor%}
+{%endif%}

@@ -1,0 +1,14 @@
+{% extends "admin/base.html" %}
+{% load i18n %}
+
+{% block title %}{{ title }} | {{blog.blogtitle}}{% endblock %}
+
+{% block branding %}
+<h1 id="site-name">
+<a href="/" target="_blank">
+{{blog.blogtitle}} <span>← 查看站点</span>
+</a>
+</h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}

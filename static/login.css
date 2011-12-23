@@ -1,0 +1,68 @@
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+    background: none repeat scroll 0 0 transparent;
+    border: 0 none;
+    margin: 0;
+    outline: 0 none;
+    padding: 0;
+    vertical-align: baseline;
+}
+
+body {
+    background: none repeat scroll 0 0 #E4E4E4;
+    color: #4B4B4B;
+    font-family: Helvetica,Arial,sans-serif;
+    line-height: 1.4;
+    margin-bottom: 20px;
+}
+a {
+    color: #2D7BB2;
+    outline: medium none;
+    text-decoration: none;
+}
+#page-content, #page-content-wide {
+    background: url("/static/images/ear-big.gif") no-repeat scroll 0 0 #FFFFFF;
+    margin: 30px auto;
+    padding: 40px 60px;
+    width: 400px;
+}
+
+#login-page p#signup, #login-page p#what_will_happen, #login-page p#omni-signin {
+    border-top: 1px solid #E4E4E4;
+    margin: 20px -60px 0;
+    padding: 20px 60px 0;
+    text-align: center;
+}
+
+#login-page p {
+    padding-top: 15px;
+}
+#login-page p#remember {
+    font-size: 0.8em;
+}
+#login-page input#user_session_login, #login-page input#user_session_password{
+    border: 1px solid #CCCCCC;
+    font-family: Helvetica,Arial,sans-serif;
+    font-size: 1.1em;
+    font-weight: bold;
+    padding: 4px;
+    width: 100%;
+}
+.button {
+    background: none repeat scroll 0 0 #2D7BB2;
+    border: 2px solid #2D7BB2;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-family: Helvetica,Arial,sans-serif;
+    font-size: 0.9em;
+    font-weight: bold;
+    margin: 0;
+    padding: 0.25em 6px;
+}
+.button:hover{
+    background: none repeat scroll 0 0 #5B605D;
+    border-color:#5B605D;
+}
+#login-page a.new_password, #login-page a.back_to_login {
+    font-size: 0.8em;
+    margin-left: 10px;
+}

@@ -1,0 +1,40 @@
+{% extends "themes/classic/base.html" %}
+{%load pagination %}
+{% block title %} Search Results for {{query}} - {{blog.blogtitle|escape}} {% endblock %}
+
+{% block content %}
+
+	{% if posts.object_list %}
+		<div class="pagetitle">Archive for {{query}} </div>
+		{% for post in posts.object_list %}
+		<article class="post">
+			<h2><a href="{{post.get_absolute_url|escape}}" rel="bookmark">{{post.title|escape}}</a></h2>
+			<div class="pmeta">{{post.date|date:"Y/m/d H:i"}} <span>&middot;</span> Posted in {{post.category.name}}</div>
+			<div class="entry">
+				<p>{{post.excerpt_content|safe}}</p>
+			</div>
+			<div class="ptags">
+				<span class="comments"><a href="{{post.get_absolute_url|escape}}#comments">{{post.comments.count}} Comments</a></span> 
+			<div class="tags">
+			Tags:
+				{% for tag in post.get_tags %}
+					{% if forloop.last %}<a href="{{ tag.get_absolute_url }}">{{ tag.name }}</a>. 
+					{% else %}<a href="{{ tag.get_absolute_url }}">{{ tag.name }}</a>, 
+					{% endif %}
+				{% endfor %}</div>
+			</div>
+		</article>
+	{%endfor%}
+	{%else%}
+		<h2>Not Found</h2>
+		<p>Sorry, but you are looking for something that isn't here.</p>
+	{%endif%}
+	<div class="navigation">
+		{% if posts.has_next %}
+			<a class="next" href="?page={{ posts.next_page_number }}&s={{query}}">下一页</a>
+		{%endif%}
+		{% if posts.has_previous %}
+			<a class="prev" href="?page={{ posts.previous_page_number }}&s={{query}}">上一页</a>
+		{%endif%}
+	</div>
+{%endblock%}

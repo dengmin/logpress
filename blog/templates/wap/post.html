@@ -1,0 +1,49 @@
+{%extends "wap/base.html"%}
+{%load comment %}
+{%block title%}
+	{{post.title}}
+{%endblock%}
+{% block content %}
+	<div data-role="header" data-position="inline">
+		<a href="{%url wap_index%}" data-icon="back" data-direction="reverse" class="ui-btn-left">返回</a>
+		<h1>阅读文章</h1>
+	</div>
+	
+	<div data-role="content">
+		<h1 class='title'>{{post.title}}</h1>
+		<p style='color:#666;font-size:x-small;'>
+			<a href="#">{{post.author.username}}</a> 发布于 {{post.date|date:"Y-m-d"}}，共有 <mark>{{post.get_comments.count}}</mark> 条评论
+		</p>
+		<div class='TextContent'>
+			{{post.content|safe}}
+		</div>
+	</div>
+	{%if post.prev%}
+	<a href="{{post.prev.get_wap_url}}" data-role="button" data-inline="true" data-icon="arrow-l">旧一篇</a>
+	{%endif%}
+	{%if post.next%}
+	<a href="{{post.next.get_wap_url}}" data-role="button" data-inline="true" data-icon="arrow-r" data-iconpos="right">新一篇</a>
+	{%endif%}
+	<ul class="commentList" data-role="listview">
+		<li data-role="list-divider">网友评论 ({{post.get_comments.count}})</li>
+		{%for comment in post.get_comments%}
+		<li id="cmt_{{comment.id}}" style='padding:3px;'>
+	    	<table width='100%' border='0'><tr>
+	    	<td class='portrait'>
+	    		<a href="/u/12" name="rpl_264627125">
+	    		<img src="{% gravator comment.email %}" align="absmiddle" alt="{{comment.author}}" title="{{comment.author}}" class="SmallPortrait" user="12"/></a>			
+	    	</td>
+	    	<td class='body'>
+	    		<div class='r_title'>
+	    			<b>{{comment.author}}</b> 发表于 {{comment.date|date:"Y-m-d"}} @ {{comment.date|date:"H:i"}}     		</div>
+	    		<div class='TextContent'>{{comment.content|safe}}</div>
+	    		<div class='opts'>
+	    			    		</div>
+	        </td>
+	    	</tr></table>
+		</li>
+		{%endfor%}
+	</ul>
+	
+	
+{%endblock%}

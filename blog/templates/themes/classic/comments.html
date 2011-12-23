@@ -1,0 +1,42 @@
+{% load comment pagination%}
+<script type="text/javascript" src="/static/js/comment-reply.js"></script>
+{% get_comment_form for post as commentform %}
+	<h3 id="comments">{{post.get_comments.count}} Responses to "{{post.title}}"</h3>
+
+	{% include "themes/classic/comment.html"%}
+
+	{% if not post.allow_comment %}
+		<p class="nocomments">Comments are closed.</p>
+	{%endif%}
+
+{% if post.allow_comment %}
+<div id="respond">
+<h3>Leave a Reply</h3>
+<div id="cancel-comment-reply">
+		<small><a rel="nofollow" id="cancel-comment-reply-link" href="#respond" style="display:none;">点击这里取消回复</a></small>
+	</div>
+<form action="{%url post_comment%}" method="post" id="commentform">
+{% csrf_token %}
+	<p>{{commentform.author}}
+	<label for="author">Name <b style='color:red'>*</b></label></p>
+	
+	<p>{{commentform.email}}
+	<label for="email">Mail (will not be published) <b style='color:red'>*</b></label></p>
+	
+	<p>{{commentform.url}}
+	<label for="url">Website</label></p>
+	
+	<p><textarea name="content" id="comment" cols="100%" rows="10" tabindex="5"></textarea></p>
+	
+	{{ commentform.content_type }}
+	 {{ commentform.object_pk }}
+	 {{ commentform.parent_id }}
+	
+	<p>
+	<input name="submit" type="submit" id="submit" tabindex="7" value="Submit Comment" />
+	<input type="checkbox" name="mail_notify" style="width: auto;margin-left:10px;" checked="checked" tabindex="6"/>
+    <label for="mail_notify">有回复时邮件通知我</label>
+	</p>
+</form>
+</div>
+{%endif%}

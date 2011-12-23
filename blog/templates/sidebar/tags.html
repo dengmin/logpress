@@ -1,0 +1,11 @@
+{% load tagging_tags %}
+
+
+{% tag_cloud_for_model blog.Post as tags with steps=2 min_count=1 distribution=linear %}
+ <div class="tagCloud">
+    {% for tag in tags %}
+    <a href="{%url retrieve_post_by_tag tag %}" style="font-size: {{ tag.font_size|add:"12" }}px;" title="{{ tag.count }} posts">{{tag}}({{ tag.count }})</a>
+    {% endfor %}
+ </div>
+
+

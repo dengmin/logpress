@@ -1,0 +1,88 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+
+{% block extrastyle %}
+{{ block.super }}<link rel="stylesheet" type="text/css" href="{% load adminmedia %}{% admin_media_prefix %}css/dashboard.css" />
+<link rel="stylesheet" href="/static/admin/subMenu.css" type="text/css" media="screen"/>
+<link rel="stylesheet" href="/static/admin.css" type="text/css" media="screen"/>
+{% endblock %}
+
+{% block coltype %}colMS{% endblock %}
+
+{% block bodyclass %}dashboard{% endblock %}
+
+{% block extrahead %}
+	<script type="text/javascript" src="/static/js/jquery.min.js"></script>
+	<script type="text/javascript" src="/static/js/jquery.cookie.js"></script>
+	<script type="text/javascript" src="/static/js/jquery.subMenu.js"></script>
+	<script type="text/javascript">
+	var Mysubmenu=null;
+	$(function(){
+		Mysubmenu=$("#logpress_menu").submenu({
+			oneSmOnly:false,
+			speed:300,
+			expandNum:1,
+			savestatus:false
+		}).expandAll();
+	})
+	</script>
+{% endblock %}
+
+{% block content %}
+
+
+<div id="logpressbody">
+	{% include "admin/menu.html"%}
+	<div id="logpressbody-content" style="overflow: hidden;">
+			<div id="content-main">
+			{% block content_title %}{% if title %}<h1>{{ title }}</h1>{% endif %}{% endblock %}
+			{%block logpress%}{%endblock%}
+</div>
+{% endblock %}
+
+{% block sidebar %}
+<div id="content-related">
+    <div class="module" id="recent-actions-module">
+        <h2>{% trans 'Recent Actions' %}</h2>
+        <h3>{% trans 'My Actions' %}</h3>
+            {% load log %}
+            {% get_admin_log 10 as admin_log for_user user %}
+            {% if not admin_log %}
+            <p>{% trans 'None available' %}</p>
+            {% else %}
+            <ul class="actionlist">
+            {% for entry in admin_log %}
+            <li class="{% if entry.is_addition %}addlink{% endif %}{% if entry.is_change %}changelink{% endif %}{% if entry.is_deletion %}deletelink{% endif %}">
+                {% if entry.is_deletion %}
+                    {{ entry.object_repr }}
+                {% else %}
+                    <a href="{{ entry.get_admin_url }}">{{ entry.object_repr }}</a>
+                {% endif %}
+                <br/>
+                {% if entry.content_type %}
+                    <span class="mini quiet">{% filter capfirst %}{% trans entry.content_type.name %}{% endfilter %}</span>
+                {% else %}
+                    <span class="mini quiet">{% trans 'Unknown content' %}</span>
+                {% endif %}
+            </li>
+            {% endfor %}
+            </ul>
+            {% endif %}
+    </div>
+</div>
+	</div>
+	<br class="clear">
+</div>
+{% endblock %}
+
+{%block footer%}
+<div id="footer">
+	<p class="alignleft" id="footer-left">
+		<span id="footer-thankyou">
+			<a href="http://www.iyouf.info/">dengmin</a> | Copyright 2010
+		</span>
+	</p>
+	<p class="alignright" id="footer-upgrade"></p>
+	<div class="clear"></div>
+</div>
+{%endblock%}

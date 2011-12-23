@@ -1,0 +1,44 @@
+{% extends "themes/classic/base.html" %}
+{% block content %}
+
+	{% if posts.object_list %}
+	{%if archtype == 'calendar'%}
+		<div class="pagetitle">Archive for the {{year}}-{{month}}-{{day}} </div>
+	{%endif%}
+	{%if archtype == 'category'%}
+		<div class="pagetitle">Archive for the {{name|escape}} </div>
+	{%endif%}
+	{%if archtype == 'archive'%}
+		<div class="pagetitle">Archive for the {{year}}-{{month}} </div>
+	{%endif%}
+	{%if archtype == 'tag'%}
+		<div class="pagetitle">Archive for the {{tag|escape}} </div>
+	{%endif%}
+	
+		{% for post in posts.object_list %}
+		<article class="post">
+			<h2><a href="{{ post.get_absolute_url|escape }}" rel="bookmark">{{post.title|escape}}</a></h2>
+			<div class="pmeta">{{post.date|date:"Y/m/d H:i"}} <span>&middot;</span> Posted in {{post.category.name}}</div>
+			<div class="entry">
+				<p>{{post.excerpt_content|safe}}</p>
+			</div>
+			<div class="ptags">
+				<span class="comments">
+					<a href="{{post.get_absolute_url|escape}}#comments">{{post.comments.count}} Comments</a>
+				</span> 
+				<div class="tags">
+			Tags:
+				{% for tag in post.get_tags %}
+					{% if forloop.last %}<a href="{{ tag.get_absolute_url }}">{{ tag.name }}</a>. 
+					{% else %}<a href="{{ tag.get_absolute_url }}">{{ tag.name }}</a>, 
+					{% endif %}
+				{% endfor %}</div>
+				</div>
+		</article>
+	{%endfor%}
+	{%else%}
+		<h2>Not Found</h2>
+		<p>Sorry, but you are looking for something that isn't here.</p>
+	{%endif%}
+
+{%endblock%}

@@ -1,0 +1,9 @@
+<li><a href="{%url feed_post %}" title="RSS Blog">RSS Blog</a></li>
+<li><a href="{%url feed_comment %}" title="RSS Comment">RSS Comments {{request.user.is_authenticated}}</a></li>
+
+{% if user.is_authenticated %}
+<li><a href="{%url admin:index %}" title="站点管理">站点管理</a></li>
+<li><a href="{%url admin:logout %}" title="退出">退出</a></li>
+{%else%}
+<li><a href="{%url admin:index %}">登录</a></li>
+{%endif%}

@@ -1,0 +1,9 @@
+{% if links %}
+	{%for link in links%}
+	<li>
+		<a href="{{link.href}}" target="_blank" title="{{link.comment}}">
+			{{link.text}}
+		</a>
+	</li>
+	{%endfor%}
+{%endif%}

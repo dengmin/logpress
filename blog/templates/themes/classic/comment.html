@@ -1,0 +1,52 @@
+{%load mptt_tags comment%}
+
+<ol class="commentlist">
+{% recursetree post.get_comments %}
+	 {% if node.is_leaf_node %}
+		<li id="comment-{{node.id}}" class="comment">
+		<div class="commentdiv">
+			<div class="comment-author vcard">
+				<img width="32" height="32" class="avatar avatar-32 photo" src="{% gravator node.email %}" alt="">
+				<cite class="fn">
+				{%if node.weburl %}
+				<a class="url" rel="external nofollow" href="{{node.weburl}}" target="_blank">{{node.author}}:</a>
+				{% else %}
+				{{node.author}}:
+				{%endif%}
+				</cite>
+				<div class="comment-meta commentmetadata"><a href="#comment-{{node.id}}" title="">{{node.date|date:"Y-m-d"}} @ {{node.date|date:"H:i"}}</a> </div>
+				</div>
+			<div class="ctext">
+				<p>{{node.content|safe|linebreaksbr}}</p>
+			</div>
+			<div class="reply"> <a class="comment-reply-link" onclick="return addComment.moveForm('comment-{{node.id}}','{{node.id}}','respond')" 
+			 href="#respond" rel="nofollow">回复</a></div>
+			</div>
+		</li>
+	{%else%}
+		<li id="comment-{{node.id}}" class="comment">
+		<div class="commentdiv">
+			<div class="comment-author vcard">
+				<img width="32" height="32" class="avatar avatar-32 photo" src="{% gravator node.email %}" alt="">
+				<cite class="fn">
+				{%if node.weburl %}
+				<a class="url" rel="external nofollow" href="{{node.weburl}}" target="_blank">{{node.author}}:</a>
+				{% else %}
+				{{node.author}}:
+				{%endif%}
+				</cite>
+				<div class="comment-meta commentmetadata"><a href="#comment-{{node.id}}" title="">{{node.date|date:"Y-m-d"}} @ {{node.date|date:"H:i"}}</a> </div>
+				</div>
+			<div class="ctext">
+				<p>{{node.content|safe|linebreaksbr}}</p>
+			</div>
+			<div class="reply"> <a class="comment-reply-link" onclick="return addComment.moveForm('comment-{{node.id}}','{{node.id}}','respond')" 
+			 href="#respond" rel="nofollow">回复</a></div>
+			</div>
+			<ul class="children">
+				 {{ children }}
+			</ul>
+		</li>
+	{%endif%}
+	{% endrecursetree %}
+</ol>

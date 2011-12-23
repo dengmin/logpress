@@ -1,0 +1,61 @@
+#header {
+    background: none repeat scroll 0 0 #464646;
+    height:46px;
+}
+#site-name a:hover{
+	text-decoration: none;
+}
+#branding h1 {
+	color:#FFF;
+}
+#content {
+    margin: 5px;
+}
+#user-tools {
+	font-size:12px;
+}
+.dashboard #content {
+    width: 100%;
+}
+#content-main {
+    float: left;
+    width: 78%;
+}
+
+#content-main h1{
+	margin-top: 8px;
+}
+#content-related {
+    float: right;
+    margin-right:30px;
+}
+
+#logpress_menu {
+    margin: 2px 5px 15px;
+}
+#footer {
+    bottom: 0;
+    clear: both;
+    height: 40px;
+    left: 0;
+    margin-top: -20px;
+    position: relative;
+}
+.alignleft {
+    float: left;
+}
+#footer, #footer a {
+    font-family: Georgia,"Times New Roman","Bitstream Charter",Times,serif;
+    font-size: 12px;
+    font-style: italic;
+    color:#CCCCCC;
+}
+#footer, #footer-upgrade {
+    background: none repeat scroll 0 0 #464646;
+    color: #999999;
+}
+#footer p {
+    line-height: 15px;
+    margin: 0;
+    padding: 15px;
+}

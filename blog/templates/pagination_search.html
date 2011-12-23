@@ -1,0 +1,15 @@
+<div class="pagenavi">
+	<span class="pages">
+		Page {{ pagi_current }} of {{ pagi_page.paginator.num_pages }}
+	</span>
+{% if pagi_page.has_previous %}
+{% ifnotequal pagi_range.0 1 %} <a href="?{{ pagi_path }}&page=1">««</a>{% endifnotequal %}
+<a href="?{{ pagi_path }}page/{{ pagi_page.previous_page_number }}">«</a>{% endif %}
+{% for num in pagi_range %}
+	{% ifequal num pagi_current %}<span class="current">{{ num }}</span>
+	{% else %}<a href="?{{ pagi_path }}&page={{ num }}">{{ num }}</a>
+	{% endifequal %}
+{% endfor %}
+{% if pagi_page.has_next %}<a href="?{{ pagi_path }}&page={{ pagi_page.next_page_number }}">»</a>
+	{% ifnotequal pagi_current pagi_page.next_page_number %}<a href="?{{ pagi_path }}&page={{ pagi_page.paginator.num_pages }}">»»</a>{% endifnotequal %}{% endif %}
+</div>

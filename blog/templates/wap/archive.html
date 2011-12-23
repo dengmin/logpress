@@ -1,0 +1,42 @@
+{%extends "wap/base.html"%}
+{%load comment %}
+{%block title%}
+	archive for {{name}}
+{%endblock%}
+
+{% block content %}
+<div data-role="header">
+	<a href="{%url wap_index%}" data-icon="back" class="ui-btn-left">首页</a>
+	<h1>{{cat.name}} {{cat.id}}</h1>
+</div>
+<div data-role="header">
+	<div data-role="navbar">
+		<ul>
+		{%for cate in categories %}
+			<li id='category-{{cate.id}}'><a href="{{cate.get_wap_url}}" {%ifequal cate.id cat.id%}class='ui-btn-active'{%endifequal%} >{{cate.name}}</a></li>
+		{%endfor%}	
+		</ul>
+	</div>
+</div>
+<div data-role="content">
+	<ul data-role="listview" data-inset="true" data-theme="c">
+		{%for post in posts%}
+		<li><a class="ui-link-inherit"
+			href="{{post.get_wap_url}}">
+				<h3 class="ui-li-heading">{{post.title}}</h3>
+				<p class="ui-li-desc">发布于 {{post.date|date:"Y-m-d"}}({{post.get_comments.count}}条评论)</p> </a>
+		</li>
+		{%endfor%}
+	</ul>
+</div>
+
+<div data-role="footer" data-id="foo1" data-position="fixed">
+	<div data-role="navbar">
+		<ul>
+			<li><a href="{%url wap_post_type 'popular'%}">热门文章</a></li>
+			<li><a href="{%url wap_post_type 'random'%}">随机文章</a></li>
+			<li><a href="{%url wap_post_type 'recent'%}">最新发表</a></li>
+		</ul>
+	</div>
+</div>
+{%endblock%}

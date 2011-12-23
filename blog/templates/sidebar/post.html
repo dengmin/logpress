@@ -1,0 +1,5 @@
+{% if posts %}
+	{% for post in posts %}
+	<li><a href="{{post.get_absolute_url|escape}}" title="{{post.title|escape}}">{{post.title|escape}}</a>({{post.readtimes}})</li>
+	{%endfor%}
+{% endif %}
