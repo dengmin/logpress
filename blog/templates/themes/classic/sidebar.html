@@ -1,0 +1,63 @@
+{% load sidebar %}
+<aside>
+    <div id="sidebar1">
+    
+    	<div class="section">
+    		{%get_calendar%}
+    	</div>
+    	<div class="section">
+			<h3>Recent Post</h3>
+			{% get_recent_posts %}
+		</div>
+		
+		<div class="section">
+			<h3>Random Post</h3>
+			{%get_random_posts %}
+		</div>
+		
+		<div class="section">
+			<h3>Popular Post</h3>
+			{%get_popular_posts %}
+		</div>
+		
+		<div class="section">
+			<h3>Recent Comments</h3>
+			{%get_recent_comments%}
+		</div>
+		
+		<div class="section">
+			<h3>Tags</h3>
+	      	<div id="tagCloud">
+				{% get_tag_cloud %}
+	      	</div>
+		</div>
+		
+		<div class="section">
+			<h3>Meta</h3>
+			{%get_meta_widget%}
+		</div>
+	</div>
+
+	<div id="sidebar2">
+
+		<div class="section">
+			<h3>Categories</h3>
+			{% get_categories %}
+		</div>
+		<div class="section">
+			<h3>Archive</h3>
+			<ul>
+				{%get_archives%}
+			</ul>
+		</div><!-- .section -->
+
+		<div class="section">
+			<h3>Blogroll</h3>
+			<ul>
+				{%get_links%}
+			</ul>
+		</div>
+
+	</div>
+
+</aside>
