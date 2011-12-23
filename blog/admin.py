@@ -20,18 +20,9 @@ class PostForm(forms.ModelForm):
     class Meata:
         model = Post
 
-class PageForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super(PageForm, self).__init__(*args, **kwargs)
-        self.fields['content'].widget = forms.Textarea(attrs={'id':'content','cols':90,'rows':20})
+class PageForm(PostForm):
     class Meata:
         model = Page
-    class Media:
-        js= (
-             '/static/kindeditor/kindeditor-min.js',
-             '/static/kindeditor/lang/zh_CN.js',
-             '/static/kindeditor/textarea.js',
-             )
 
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name','parent','desc','count')
@@ -41,7 +32,7 @@ class PostAdmin(admin.ModelAdmin):
     list_display = ('author','title','published','category','tags','readtimes','allow_comment')
     fieldsets = (
         (None, {
-            'fields': ('author','title', 'content', 'tags','category',)
+            'fields': ('author','category','title', 'content', 'tags','slug')
         }),
         ('高级选项', {
             'classes': ('collapse',),
@@ -53,6 +44,15 @@ class PostAdmin(admin.ModelAdmin):
 class PageAdmin(admin.ModelAdmin):
     form = PageForm
     list_display = ('author','title','published','slug')
+    fieldsets = (
+        (None, {
+            'fields': ('author','title', 'content', 'slug')
+        }),
+        ('高级选项', {
+            'classes': ('collapse',),
+            'fields': ('allow_comment', 'allow_pingback','published',)
+        }),
+    )
     
 class CommentAdmin(admin.ModelAdmin):
     list_display = ('author','email','content','is_public','ip_address','date')

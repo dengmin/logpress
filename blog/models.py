@@ -54,9 +54,9 @@ class Comment(MPTTModel):
     ip_address  = models.IPAddressField( blank=True, null=True,verbose_name=u'ip地址')
     is_public   = models.BooleanField(default=True)
     date = models.DateTimeField(verbose_name=u'发布日期')
-    useragent=models.CharField(max_length=300)
-    content_type   = models.ForeignKey(ContentType)
-    object_pk      = models.PositiveIntegerField()
+    useragent=models.CharField(max_length=300,editable=False)
+    content_type   = models.ForeignKey(ContentType,editable=False)
+    object_pk      = models.PositiveIntegerField(editable=False)
     content_object = generic.GenericForeignKey(ct_field="content_type", fk_field="object_pk")
 
     def get_content_object_url(self):
@@ -79,13 +79,12 @@ class Comment(MPTTModel):
         ordering = ['-date']
 
 class Post(models.Model):
-    
     author=models.ForeignKey(User,verbose_name=u'文章作者')
+    category= models.ForeignKey(Category,verbose_name=u'文章分类') #文章分类
     title = models.CharField(max_length=200,verbose_name=u'标题')
     content = models.TextField(verbose_name=u'内容')
     #标签
     tags=TagField(verbose_name=u'标签',help_text=u'多个标签请用英文逗号分开')
-    category= models.ForeignKey(Category,verbose_name=u'文章分类') #文章分类
     #阅读的次数
     readtimes = models.IntegerField(default=0,editable=False,verbose_name=u'浏览次数')
     slug = models.CharField(max_length=100, null=True, blank=True,verbose_name='Slug',\
@@ -185,9 +184,9 @@ class Page(models.Model):
     title = models.CharField(max_length=200,verbose_name=u'标题')  #页面标题
     content = models.TextField(verbose_name=u'内容')  #页面内容
     slug = models.CharField(max_length=100, null=True, blank=True,verbose_name=u'Slug')
-    allow_comment = models.BooleanField(verbose_name=u'允许评论',help_text=u'这篇文章接受用户评论')
-    allow_pingback = models.BooleanField(verbose_name=u'这篇文章接受pingback')
-    published = models.BooleanField(default=False,verbose_name='发布这篇文章')
+    allow_comment = models.BooleanField(default=True,verbose_name=u'这篇文章接受用户评论')
+    allow_pingback = models.BooleanField(default=True,verbose_name=u'这个文章接受pingback')
+    published = models.BooleanField(default=True,verbose_name='发布这个页面')
     menu_order = models.IntegerField(default=0,verbose_name=u'页面排序')  #排序
     readtimes = models.IntegerField(default=0,editable=False,verbose_name=u'浏览次数')
     #所有评论

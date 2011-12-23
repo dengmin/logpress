@@ -2,6 +2,16 @@
     background: none repeat scroll 0 0 #464646;
     height:46px;
 }
+
+.login #header{
+	background: none repeat scroll 0 0 #417690;
+}
+.login #footer{
+    clear: both;
+    padding: 10px;
+    height:0px;
+    background:none repeat scroll 0 0 #fff;
+}
 #site-name a:hover{
 	text-decoration: none;
 }
@@ -44,6 +54,9 @@
 .alignleft {
     float: left;
 }
+
+select{width:20em;}
+
 #footer, #footer a {
     font-family: Georgia,"Times New Roman","Bitstream Charter",Times,serif;
     font-size: 12px;

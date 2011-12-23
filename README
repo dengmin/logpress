@@ -15,3 +15,8 @@
   jquery mobile版的Wap页面
   文章搜索
   
+  
+安装
+  sae的管理界面导入blog.sql文件 建立数据库表
+  修改 blog/local_setting.py 文件中的 BLOG_DOMAIN ,把它设置成你的域名
+  程序上传到Svn
