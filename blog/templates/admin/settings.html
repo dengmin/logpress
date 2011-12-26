@@ -1,0 +1,9 @@
+{% extends "admin/index.html" %}
+{%block logpress%}
+
+{%if binded%}
+已绑定微博 <a href="{%url unbind_weibo%}">取消</a>
+{%else%}
+点击“绑定”按钮去新浪网页认证<a href="{%url bind_weibo%}">绑定</a>
+{%endif%}
+{%endblock%}

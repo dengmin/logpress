@@ -19,5 +19,5 @@
   
 安装
   sae的管理界面导入blog.sql文件 建立数据库表
-  修改 blog/local_setting.py 文件中的 BLOG_DOMAIN ,把它设置成你的域名
+  修改 blog/local_setting.py 文件中的 对应的值
   程序上传到Svn

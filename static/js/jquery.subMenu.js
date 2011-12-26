@@ -114,3 +114,14 @@ $.fn.extend({
         }
 })
 })(jQuery);
+
+
+var Mysubmenu=null;
+	$(function(){
+		Mysubmenu=$("#logpress_menu").submenu({
+			oneSmOnly:false,
+			speed:300,
+			expandNum:1,
+			savestatus:false
+		}).expandAll();
+	})

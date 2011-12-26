@@ -67,6 +67,15 @@
     <div id="content" class="{% block coltype %}colM{% endblock %}">
         {% block pretitle %}{% endblock %}
         {% block content %}
+        
+        	<div id="logpressbody">
+				{% include "admin/menu.html"%}
+				<div id="logpressbody-content" style="overflow: hidden;">
+						<div id="content-main">
+						{% block content_title %}{% if title %}<h1>{{ title }}</h1>{% endif %}{% endblock %}
+						{%block logpress%}{%endblock%}
+			</div>
+        
         {% block object-tools %}{% endblock %}
         {{ content }}
         {% endblock %}

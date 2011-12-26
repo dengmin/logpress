@@ -10,5 +10,5 @@ admin.autodiscover()
 urlpatterns = patterns('',
     url(r'^themes/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.ROOT_DIR+'/templates/themes/',}),
     (r'^admin/', include(admin.site.urls)),
-    (r'',include('blog.views.index_url')),
+    (r'',include('blog.views.urls')),
 )

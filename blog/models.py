@@ -12,7 +12,7 @@ from django.utils.translation import ugettext_lazy as _
 from blog.mptt.models import MPTTModel
 from blog.tagging.fields import TagField
 from blog.tagging.models import Tag
-
+import blog.signals as signals
 from blog.managers import PostManager,PageManager
 
 class Category(MPTTModel):
@@ -148,35 +148,19 @@ class Post(models.Model):
         self.readtimes += 1
         super(Post,self).save()
     
+    def save(self):
+        super(Post,self).save()
+        print 'save'
+        signals.post_was_submit.send(
+            sender = self.__class__,
+            post = self
+        )
+    
+    
     class Meta:
         db_table='blog_post'
         ordering = ['-sticky' ,'-date']
-    
-class OptionSet(models.Model):
-    key=models.CharField(max_length=100)
-    value=models.TextField()
-    
-    @classmethod
-    def set(cls,k,v):
-        os,created = OptionSet.objects.get_or_create(key=k)
-        os.value=v
-        os.save()
-        return os
-    
-    @classmethod
-    def get(cls,k,v=''):
-        try:
-            option=OptionSet.objects.get(key=k)
-        except:
-            option=OptionSet.set(k, v)
-        return option.value
-    
-    @classmethod
-    def deloption(cls,k):
-        return OptionSet.objects.get(key=k).delete()
-    
-    class Meta:
-        db_table = 'blog_optionset'
+
 
 class Page(models.Model):
     author=models.ForeignKey(User,verbose_name=u'作者') #作者
@@ -226,6 +210,33 @@ class Link(models.Model):
     
     class Meta:
         db_table = 'blog_link'
+
+
+class OptionSet(models.Model):
+    key=models.CharField(max_length=100)
+    value=models.TextField()
+    
+    @classmethod
+    def set(cls,k,v):
+        os,created = OptionSet.objects.get_or_create(key=k)
+        os.value=v
+        os.save()
+        return os
+    
+    @classmethod
+    def get(cls,k,v=''):
+        try:
+            option=OptionSet.objects.get(key=k)
+        except:
+            option=OptionSet.set(k, v)
+        return option.value
+    
+    @classmethod
+    def deloption(cls,k):
+        return OptionSet.objects.get(key=k).delete()
+    
+    class Meta:
+        db_table = 'blog_optionset'
 
 class Blog:
     

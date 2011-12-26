@@ -1,5 +1,13 @@
-{% extends "admin/base_site.html" %}
+{% extends "admin/base.html" %}
 {% load i18n %}
+{% block title %}{{ title }} | {{blog.blogtitle}}{% endblock %}
+{% block branding %}
+<h1 id="site-name">
+<a href="/" target="_blank">
+{{blog.blogtitle}} <span>← 查看站点</span>
+</a>
+</h1>
+{% endblock %}
 
 {% block extrastyle %}
 {{ block.super }}<link rel="stylesheet" type="text/css" href="{% load adminmedia %}{% admin_media_prefix %}css/dashboard.css" />
@@ -14,30 +22,8 @@
 	<script type="text/javascript" src="/static/js/jquery.min.js"></script>
 	<script type="text/javascript" src="/static/js/jquery.cookie.js"></script>
 	<script type="text/javascript" src="/static/js/jquery.subMenu.js"></script>
-	<script type="text/javascript">
-	var Mysubmenu=null;
-	$(function(){
-		Mysubmenu=$("#logpress_menu").submenu({
-			oneSmOnly:false,
-			speed:300,
-			expandNum:1,
-			savestatus:false
-		}).expandAll();
-	})
-	</script>
 {% endblock %}
 
-{% block content %}
-
-
-<div id="logpressbody">
-	{% include "admin/menu.html"%}
-	<div id="logpressbody-content" style="overflow: hidden;">
-			<div id="content-main">
-			{% block content_title %}{% if title %}<h1>{{ title }}</h1>{% endif %}{% endblock %}
-			{%block logpress%}{%endblock%}
-</div>
-{% endblock %}
 
 {% block sidebar %}
 <div id="content-related">
