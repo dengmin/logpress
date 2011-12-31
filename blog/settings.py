@@ -132,6 +132,6 @@ INSTALLED_APPS = (
 DATETIME_FORMAT = 'Y/m/d H:i:s'
 
 try:
-    from local_settings import *
+    from blog.local_settings import *
 except:
     pass

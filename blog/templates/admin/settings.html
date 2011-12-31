@@ -1,9 +1,73 @@
 {% extends "admin/index.html" %}
 {%block logpress%}
+<script type="text/javascript" src="/static/js/jquery.idTabs.min.js"></script>
+<style>
+.usual {
+  color:#111;
+  padding:15px 20px;
+  margin:8px auto;
+  background:none repeat scroll 0 0 #EDF3FE;
+}
+.usual li { list-style:none; float:left; }
+.usual ul a {
+  display:block;
+  padding:6px 10px;
+  text-decoration:none!important;
+  margin:1px;
+  margin-left:0;
+  font:10px Verdana;
+  color:#FFF;
+  background:#444;
+}
+.usual ul a:hover {
+  color:#FFF;
+  background:#111;
+  }
+.usual ul a.selected {
+  margin-bottom:0;
+  color:#000;
+  background:snow;
+  border-bottom:1px solid snow;
+  cursor:default;
+  }
+.usual div {
+  padding:10px 10px 8px 10px;
+  *padding-top:3px;
+  *margin-top:-15px;
+  clear:left;
+  background:snow;
+  font:10pt Georgia;
+}
+.usual div a { color:#000; font-weight:bold; }
 
-{%if binded%}
-已绑定微博 <a href="{%url unbind_weibo%}">取消</a>
-{%else%}
-点击“绑定”按钮去新浪网页认证<a href="{%url bind_weibo%}">绑定</a>
-{%endif%}
+#usual2 { background:#0A0A0A; border:1px solid #1A1A1A; }
+#usual2 a { background:#222; }
+#usual2 a:hover { background:#000; }
+#usual2 a.selected { background:snow; }
+#tabs3 { background:#FF9; }
+</style>
+<div id="usual" class="usual"> 
+  <ul> 
+    <li><a href="#tab1" class="selected">博客设置</a></li> 
+    <li><a href="#email">邮箱设置</a></li> 
+    <li><a href="#weibo">同步微博</a></li> 
+  </ul> 
+  <div id="tab1" style="display: block; ">
+  </div> 
+  <div id="email" style="display: none; ">More content in tab 2.</div> 
+  <div id="weibo" style="display: none; ">
+  	{%if binded%}
+	已绑定微博 <a href="{%url unbind_weibo%}">取消</a>
+	{%else%}
+	点击“绑定”按钮去新浪网页认证<a href="{%url bind_weibo%}">绑定</a>
+	{%endif%}
+  </div> 
+</div> 
+ 
+<script type="text/javascript"> 
+  $("#usual ul").idTabs(); 
+</script>
+
+
+
 {%endblock%}

@@ -40,7 +40,7 @@ class MPTTModelAdmin(ModelAdmin):
     form = MPTTAdminForm
     
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        from mptt.models import MPTTModel
+        from blog.mptt.models import MPTTModel
         if issubclass(db_field.rel.to, MPTTModel):
             return TreeNodeChoiceField(queryset=db_field.rel.to.objects.all(),
                                        required=False)

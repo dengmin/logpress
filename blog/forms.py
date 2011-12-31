@@ -12,6 +12,7 @@ class PostForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(PostForm, self).__init__(*args, **kwargs)
         self.fields['content'].widget = forms.Textarea(attrs={'id':'content','cols':90,'rows':20})
+        self.fields['password'].widget= forms.PasswordInput()
     class Media:
         js= (
              '/static/kindeditor/kindeditor-min.js',

@@ -10,6 +10,6 @@ STORAGE_DOMAIN='attachment'
 #email
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = ''
-EMAIL_HOST_PASSWORD = ''
+EMAIL_HOST_USER = 'minhao123@gmail.com'
+EMAIL_HOST_PASSWORD = 'dengmin19871010'
 EMAIL_PORT = 587

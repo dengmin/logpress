@@ -15,8 +15,8 @@
   jquery mobile版的Wap页面
   文章搜索
   支持评论邮件提醒和回复提醒
-  
-  
+  支持微博同步  
+  支持文章保护需要设置密码
 安装
   sae的管理界面导入blog.sql文件 建立数据库表
   修改 blog/local_setting.py 文件中的 对应的值

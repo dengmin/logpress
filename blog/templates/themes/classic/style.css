@@ -197,6 +197,16 @@ header {
 }
 
 
+.error{
+	background:  no-repeat scroll 5px 0.3em #FFFFCC;
+    border: 1px solid red;
+    color: red;
+    display: block;
+    font-size: 12px !important;
+    margin: 0 0 3px;
+    padding: 4px 5px 4px 25px;
+}
+
 /* Content
 -----------------------------------------------------------------------------*/
 section {

@@ -88,7 +88,7 @@ class Post(models.Model):
     readtimes = models.IntegerField(default=0,editable=False,verbose_name=u'浏览次数')
     slug = models.CharField(max_length=100, null=True, blank=True,verbose_name='Slug',\
                             help_text=u'Slug可以提高 URLs 的可读性和对搜索引擎的友好程度')
-    link = models.CharField(max_length=100, null=True, blank=True,editable=False)
+    password = models.CharField(max_length=100, null=True, blank=True,verbose_name='访问密码')
     #允许评论
     allow_comment = models.BooleanField(default=True,verbose_name=u'这篇文章接受用户评论')
     allow_pingback = models.BooleanField(default=True,verbose_name=u'这篇文章接受pingback')
@@ -138,7 +138,7 @@ class Post(models.Model):
         return self.__get_excerpt_content('Read More...')
     
     def __get_excerpt_content(self,more='Read More...'):
-        spl=self.content.split('<!--more-->')
+        spl=self.content.split('<hr class="ke-pagebreak"')
         if len(spl) > 1:
             return spl[0]+u' <a class="readmore" href="/%s">%s</a>'%(self.link,more)
         else:
@@ -155,7 +155,6 @@ class Post(models.Model):
             sender = self.__class__,
             post = self
         )
-    
     
     class Meta:
         db_table='blog_post'

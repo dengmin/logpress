@@ -9,7 +9,19 @@
 			<h2><a href="{{ post.get_absolute_url|escape }}" rel="bookmark">{%if post.sticky%}<b>[置顶]</b>{%endif%}{{post.title|escape}}</a></h2>
 			<div class="pmeta">{{post.date|date:"Y-m-d"}} <span>&middot;</span> Posted in <a href="{{post.category.get_absolute_url}}">{{post.category.name}}</a></div>
 			<div class="entry">
+				{%if post.password%}
+					<form action="{%url post post.id%}" method="post" name="password_from">
+					{% csrf_token %}
+						<p>本文已加密，请输入密码查看： </p>
+						<p>
+							<input type="password" name="post_password">
+							<input type="hidden" name="postid" value="{{post.id}}"/>
+							<input type="submit" value="提交"/>
+						</p>
+				</form>
+				{%else%}
 				<p>{{post.excerpt_content|safe}}</p>
+				{%endif%}
 			</div>
 			<div class="ptags">
 				<span class="comments"><a href="{{post.get_absolute_url|escape}}#comments">{{post.get_comments.count}} Comments</a></span> 

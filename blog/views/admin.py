@@ -12,7 +12,7 @@ from django.contrib.auth.decorators import login_required
 from blog.blogutils import render
 from blog.models import *
 from blog.forms import PostForm,PageForm
-
+import json
 from django.conf import settings
 
 try:
@@ -21,7 +21,7 @@ except ImportError:
     from django.contrib.csrf.middleware import csrf_exempt
 from blog.weibo import weibo_client
 
-def settings(request):
+def blog_settings(request):
     binded = OptionSet.get('bind_weibo','')=='True'
     return render(request,'admin/settings.html',locals())
 
@@ -64,3 +64,28 @@ def unbind_weibo(request):
     OptionSet.set('weibo_access_token_key','')
     OptionSet.set('weibo_access_token_secret','')
     return HttpResponseRedirect(back_to_url)
+
+@csrf_exempt
+def file_upload_json(request):
+    file_obj = request.FILES.get('imgFile')
+    import sae.storage
+    s=sae.storage.Client()
+    ob = sae.storage.Object(file_obj.read())
+    url = s.put(settings.STORAGE_DOMAIN,file_obj.name.decode('utf-8'),ob)
+    return HttpResponse(json.dumps({'error':0,'url':url}))
+
+
+def file_manager_json(request):
+    import sae.storage
+    s=sae.storage.Client()
+    files = s.list(settings.STORAGE_DOMAIN)
+    data = {'moveup_dir_path':'','current_dir_path':'','current_url':'http://logpress-attachment.stor.sinaapp.com/'}
+    filelist=[]
+    for f in files:
+        filelist.append({'is_dir':False,'has_file':False,'filesize':f['length'],'is_photo':True,
+                  'filename':f['name'],'datetime':f['datetime'],"filetype":'gif','dir_path':''
+                  })
+    
+    data.update({'total_count':len(filelist)})
+    data.update({'file_list':filelist})
+    return HttpResponse(json.dumps(data))

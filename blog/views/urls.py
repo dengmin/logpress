@@ -16,7 +16,8 @@ CACHE_TIME = 60*60*6
 
 urlpatterns = patterns('',
     url(r'^$',index.home,name='index_home'),
-    url(r'^archive/(?P<id>\d+)',index.post,name="post"),
+    url(r'^archive/(?P<id>\d+).html',index.protect_post(index.post),name="post"),
+    url(r'^post/password/(?P<id>\d+)',index.post_password,name='post_by_password'),
     url(r'^page/(?P<id>\d+)',index.page,name="page"),
     url(r'comment/post',index.post_coment,name='post_comment'),
     url(r'^archives/(?P<year>\d{4})/(?P<month>\d{1,2})$', index.archives,name='retrieve_post__by_month'),
@@ -42,7 +43,9 @@ urlpatterns += patterns('',
 )
 
 urlpatterns += patterns('',
-     url(r'^admin/settings',admin.settings,name='settings'),
+     url(r'^admin/file_manager_json',admin.file_manager_json,name='file_manager_json'),
+     url(r'^admin/file_upload_json',admin.file_upload_json,name='file_upload_json'),
+     url(r'^admin/settings',admin.blog_settings,name='settings'),
      url(r'^weibo/bind$',admin.bind_sina_weibo,name='bind_weibo'),
      url(r'^weibo/bind_callback/$', admin.bind_callback, name='bind_callback'),
      url(r'^weibo/unbind$',admin.unbind_weibo,name='unbind_weibo'),          

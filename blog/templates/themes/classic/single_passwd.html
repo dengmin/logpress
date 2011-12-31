@@ -12,10 +12,21 @@
 {% block content %}
 		{% if post %}
 		<article class="post">
-			<h2><a href="{{ post.get_absolute_url|escape }}" rel="bookmark">{{ post.title|escape }}</a></h2>
+			<h2><a href="/{{ post.get_absolute_url|escape }}" rel="bookmark">{{ post.title|escape }}</a></h2>
 			<div class="pmeta">{{post.date|date:"Y-m-d"}} <span>&middot;</span> Posted in <a href="/category/{{entry.category.slug}}">{{post.category.name}}</a></div>
 			<div class="entry">
-			{{ post.content|safe|wordwrap:68}}
+				{% if error%}
+				<p class="error">你提供的密码不正确,请重试!</p>
+				{%endif%}
+				<form action="" method="post" name="password_from">
+					{% csrf_token %}
+						<p>本文已加密，请输入密码查看： </p>
+						<p>
+							<input type="password" name="post_password">
+							<input type="hidden" name="postid" value="{{post.id}}"/>
+							<input type="submit" value="提交"/>
+						</p>
+				</form>
 			</div>
 			
 			<div class="prev_next">

@@ -19,9 +19,11 @@ def on_post_was_submit(sender,post,*args,**kwargs):
             access_token_secret = OptionSet.get('weibo_access_token_secret','')
             weibo_client.setToken(access_token_key,access_token_secret)
             from weibopy.api import API
+            from django.template.defaultfilters import removetags
             api = API(weibo_client)
             api.update_status(status='[%s] %s ... %s'\
-                              %(post.title,post.content[:60],settings.BLOG_DOMAIN+post.get_absolute_url()))
+                              %(post.title,removetags(post.content[:60],'a p span div img br'),\
+                                settings.BLOG_DOMAIN+post.get_absolute_url()))
     except:
         pass
      

@@ -7,6 +7,7 @@ from django.utils.http import http_date
 from django.template.loader import render_to_string
 from django.shortcuts import render_to_response
 from django.shortcuts import get_object_or_404
+from django.core.urlresolvers import reverse
 from django.conf import settings
 from blog.models import *
 from blog.tagging.models import TaggedItem
@@ -14,6 +15,7 @@ from blog.forms import CommentForm
 from blog.blogutils import render,render_to_theme,paginator_objects
 import blog.signals as signals
 import re
+from functools import wraps
 
 def get_comment_cookie_meta(request):
     author = ''
@@ -35,12 +37,34 @@ def home(request):
 
 
 def post(request,id):
-    post = Post.objects.get(id=id)
-    post.updateReadtimes()
+    post = get_object_or_404(Post,id=id)
     comment_meta = get_comment_cookie_meta(request)
+    post.updateReadtimes()
     return render_to_theme(request,'single.html',locals())
 
+def post_password(request,post):
+    comment_meta = get_comment_cookie_meta(request)
+    error=False
+    if request.method == 'POST':
+        passwd = request.POST.get('post_password','')
+        if passwd == post.password:
+            request.session['post_pw_%s'%post.id]=post.password
+            return HttpResponseRedirect(reverse('post',args=[post.id]))
+        error = True
+    return render_to_theme(request,'single_passwd.html',locals())
 
+def protect_post(view):
+    @wraps(view)
+    def wrapper(*ka, **kw):
+        request = ka[0]
+        post = get_object_or_404(Post,id=kw['id'])
+        if post.password and post.password != \
+            request.session.get('post_pw_%s'%post.id,''):
+            return post_password(request,post)
+        return view(*ka, **kw)
+    return wrapper
+            
+ 
 def page(request,id):
     post = Page.objects.get(id=id)
     comment_meta = get_comment_cookie_meta(request)
