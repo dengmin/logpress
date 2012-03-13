@@ -8,12 +8,14 @@ from django.core.urlresolvers import reverse
 from django.utils import simplejson
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.conf import settings
 
 from blog.blogutils import render
 from blog.models import *
 from blog.forms import PostForm,PageForm
-import json
-from django.conf import settings
+from blog.themes import Theme,load_themes_from
+import os,json
+
 
 try:
     from django.views.decorators.csrf import csrf_exempt
@@ -70,16 +72,19 @@ def file_upload_json(request):
     file_obj = request.FILES.get('imgFile')
     import sae.storage
     s=sae.storage.Client()
+    dir = request.get('dir','')
     ob = sae.storage.Object(file_obj.read())
-    url = s.put(settings.STORAGE_DOMAIN,file_obj.name.decode('utf-8'),ob)
+    url = s.put(settings.STORAGE_DOMAIN,'%s/%s'%(dir,file_obj.name.decode('utf-8')),ob)
     return HttpResponse(json.dumps({'error':0,'url':url}))
 
 
 def file_manager_json(request):
     import sae.storage
     s=sae.storage.Client()
+    dir = request.GET.get('dir','')
     files = s.list(settings.STORAGE_DOMAIN)
-    data = {'moveup_dir_path':'','current_dir_path':'','current_url':'http://logpress-attachment.stor.sinaapp.com/'}
+    appname = request.META.get('HTTP_APPNAME','logpress')
+    data = {'moveup_dir_path':'','current_dir_path':'','current_url':'http://%s-attachment.stor.sinaapp.com/'%(appname)}
     filelist=[]
     for f in files:
         filelist.append({'is_dir':False,'has_file':False,'filesize':f['length'],'is_photo':True,
@@ -89,3 +94,9 @@ def file_manager_json(request):
     data.update({'total_count':len(filelist)})
     data.update({'file_list':filelist})
     return HttpResponse(json.dumps(data))
+
+def themes(request):
+    current_theme = OptionSet.get('blog_theme')
+    themes = load_themes_from(settings.THEMES_DIR)
+    theme = Theme(os.path.join(settings.THEMES_DIR,current_theme))
+    return render(request,'admin/themes.html',locals())

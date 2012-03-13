@@ -1,6 +1,6 @@
 {% extends "admin/base.html" %}
 {% load i18n %}
-{% block title %}{{ title }} | {{blog.blogtitle}}{% endblock %}
+{% block title %}{{settings.BLOG_NAME}}{% endblock %}
 {% block branding %}
 <h1 id="site-name">
 <a href="/" target="_blank">
@@ -64,7 +64,7 @@
 <div id="footer">
 	<p class="alignleft" id="footer-left">
 		<span id="footer-thankyou">
-			<a href="http://www.iyouf.info/">dengmin</a> | Copyright 2010
+			<a href="http://www.iyouf.info/">dengmin</a> | Copyright 2012
 		</span>
 	</p>
 	<p class="alignright" id="footer-upgrade"></p>

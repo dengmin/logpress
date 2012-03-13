@@ -35,7 +35,6 @@ def home(request):
     ishome=True
     return render_to_theme(request,'index.html',locals())
 
-
 def post(request,id):
     post = get_object_or_404(Post,id=id)
     comment_meta = get_comment_cookie_meta(request)
@@ -64,7 +63,7 @@ def protect_post(view):
         return view(*ka, **kw)
     return wrapper
             
- 
+
 def page(request,id):
     post = Page.objects.get(id=id)
     comment_meta = get_comment_cookie_meta(request)
@@ -173,3 +172,15 @@ def search(request):
         )
         posts = paginator_objects(Post.objects.filter(qset, published=True).distinct(),page)
     return render_to_theme(request,'search.html',locals())
+
+
+def handler404(request):
+    print '404'
+    response = render('404.html',{'path':request.path})
+    response.status_code=404
+    return response
+
+def sitemap(request):
+    posts = Post.objects.get_post()
+    categories = Category.objects.all()
+    return render_to_theme(request,'sitemap.html',locals())

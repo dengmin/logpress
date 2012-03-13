@@ -50,7 +50,7 @@ class Comment(MPTTModel):
                                related_name = 'children')
     # Metadata about the comment
     ip_address  = models.IPAddressField( blank=True, null=True,verbose_name=u'ip地址')
-    is_public   = models.BooleanField(default=True)
+    is_public   = models.BooleanField(default=True,verbose_name=u'显示')
     date = models.DateTimeField(editable=False,verbose_name=u'发布日期')
     useragent=models.CharField(max_length=300,editable=False)
     content_type   = models.ForeignKey(ContentType,editable=False)
@@ -236,12 +236,3 @@ class OptionSet(models.Model):
     
     class Meta:
         db_table = 'blog_optionset'
-
-class Blog:
-    
-    def __init__(self):
-        self.blogtitle = OptionSet.get('blogtitle', 'LogPress')
-        self.subtitle = OptionSet.get('subtitle','a simple blog named logpress')
-        self.sitekeywords = OptionSet.get('sitekeywords', 'blog,sae,django,python,youflog')
-        self.sitedescription = OptionSet.get('sitedescription', 'a blog system')
-        self.theme_name = OptionSet.get('theme_name','classic')

@@ -5,16 +5,20 @@ from django.template import RequestContext
 from django.template.loader import get_template
 from django.template.context import Context
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
-
 from django.conf import settings
+
+theme = False
 
 def render(request, *args, **kwargs):
     kwargs['context_instance'] = RequestContext(request)
     return render_to_response(*args, **kwargs)
 
 def render_to_theme(request,theme_file,template_ctx):
-    theme = 'classic'
-    tpl_file='themes/'+theme+'/'+theme_file
+    global theme
+    if not theme:
+        from blog.models import OptionSet
+        theme = OptionSet.get('blog_theme','classic')
+    tpl_file='themes/%s/%s' % (theme , theme_file)
     return render(request,tpl_file,template_ctx)
 
 

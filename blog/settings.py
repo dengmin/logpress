@@ -1,27 +1,14 @@
 # Django settings for blog project.
 import os
-import sae.core
-app = sae.core.Application()
 ROOT_DIR = os.path.dirname(__file__)
 DEBUG = True
-TEMPLATE_DEBUG = DEBUG
+TEMPLATE_DEBUG = True
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
 
 MANAGERS = ADMINS
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': app.mysql_db,                      # Or path to database file if using sqlite3.
-        'USER': app.mysql_user,                      # Not used with sqlite3.
-        'PASSWORD': app.mysql_pass,                  # Not used with sqlite3.
-        'HOST': app.mysql_host,                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': app.mysql_port,                      # Set to empty string for default. Not used with sqlite3.
-    }
-}
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -101,14 +88,13 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.http.ConditionalGetMiddleware',
+    'django.middleware.gzip.GZipMiddleware',
 )
 
 ROOT_URLCONF = 'blog.urls'
 
 TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
     os.path.join(os.path.dirname(__file__), 'templates/'),
 )
 
@@ -130,6 +116,8 @@ INSTALLED_APPS = (
     'blog.tagging'
 )
 DATETIME_FORMAT = 'Y/m/d H:i:s'
+
+THEMES_DIR = os.path.join(ROOT_DIR, 'templates/themes')
 
 try:
     from blog.local_settings import *

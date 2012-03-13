@@ -1,0 +1,17 @@
+User-agent: *
+Crawl-delay: 10
+
+Disallow: /admin
+Disallow: /admin*
+Disallow: /admin/
+
+User-agent: Baiduspider-mobile
+Allow: /wap
+Allow: /wap*
+Allow: /wap/
+
+
+User-agent: Googlebot-Mobile
+Allow: /wap
+Allow: /wap*
+Allow: /wap/

@@ -19,11 +19,20 @@ class PostForm(forms.ModelForm):
              '/static/kindeditor/lang/zh_CN.js',
              '/static/kindeditor/textarea.js',
              )
-    class Meata:
+    class Meta:
         model = Post
 
-class PageForm(PostForm):
-    class Meata:
+class PageForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(PageForm, self).__init__(*args, **kwargs)
+        self.fields['content'].widget = forms.Textarea(attrs={'id':'content','cols':90,'rows':20})
+    class Media:
+        js= (
+             '/static/kindeditor/kindeditor-min.js',
+             '/static/kindeditor/lang/zh_CN.js',
+             '/static/kindeditor/textarea.js',
+             )
+    class Meta:
         model = Page
 
 class CommentForm(forms.Form):

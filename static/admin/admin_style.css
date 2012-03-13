@@ -1,0 +1,46 @@
+.clear {
+    clear: both;
+}
+#current-theme img {
+    border-color: #999999;
+}
+#current-theme img {
+    border-style: solid;
+    border-width: 1px;
+    float: left;
+    margin-bottom: 1.5em;
+    margin-right: 1em;
+    width: 150px;
+}
+
+#current-theme h4{
+	display: block;
+    font-weight: bold;
+    margin: 1.33em 0;
+}
+
+#current-theme a {
+    border-bottom: medium none;
+     color: #21759B;
+}
+table#availablethemes {
+    border-spacing: 0;
+    border-style: solid none;
+    border-width: 1px 0;
+    margin: 10px auto;
+    width: 100%;
+}
+#availablethemes, #availablethemes td {
+    border-color: #DDDDDD;
+}
+table#availablethemes td.right, table#availablethemes td.left {
+    border-left: 0 none;
+    border-right: 0 none;
+}
+td.available-theme {
+    margin: 0;
+    padding: 20px;
+    text-align: left;
+    vertical-align: top;
+    width: 240px;
+}

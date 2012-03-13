@@ -1,0 +1,33 @@
+{% extends "admin/index.html" %}
+{%block logpress%}
+<link rel="stylesheet" href="/static/admin/admin_style.css" type="text/css" media="screen"/>
+<h2>管理主题</h2>
+<h3>当前主题</h3>
+<div id="current-theme">
+	<img alt="主题预览" src="/themes/{{theme.name}}/{{theme.screenshot}}">
+	<h4>{{theme.name}} 作者是 <a href="{{theme.website}}" title="访问作者主页" target="_blank">{{theme.author}}</a></h4>
+	<p class="description">{{theme.description}}</p>
+	<p>标签: {{theme.tags}}</p>
+</div>
+<div class="clear"></div>
+<h3>可用主题</h3>
+<table id="availablethemes" cellspacing="0" cellpadding="0">
+	<tbody>
+	
+	<tr>
+	{%for theme in themes%}
+		<td class="available-theme top left">
+			<a>
+				<img alt="{{theme.name}}" src="/themes/{{theme.name}}/{{theme.screenshot}}">
+			</a>
+			<h3>{{theme.author}}</h3>
+			<p>{{theme.description}}</p>
+			<p>标签: {{theme.tags}}</p>
+		</td>
+	{%endfor%}
+	</tr>
+</tbody>
+</table>
+
+
+{%endblock%}

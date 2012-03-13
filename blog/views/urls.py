@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 # *_* encoding=utf-8*_*
-from django.conf.urls.defaults import patterns, include, url
+from django.conf.urls.defaults import patterns, include, url,handler500
 from django.views.decorators.cache import cache_page
 from django.contrib.sitemaps import views as sitemap_views
 from django.conf import settings
 
-from blog.views import index,wap,admin
+from blog.views import index,wap,admin,xmlrpc
 from blog.views.feed import PostFeed,AtomPostFeed,CommentFeed,BlogSiteMap
 
 sitemaps = {
@@ -13,6 +13,8 @@ sitemaps = {
 }
 
 CACHE_TIME = 60*60*6 
+
+handler404=index.handler404
 
 urlpatterns = patterns('',
     url(r'^$',index.home,name='index_home'),
@@ -32,8 +34,15 @@ urlpatterns = patterns('',
     url(r'^feed/comment$',cache_page(CommentFeed(),60*60*6),name="feed_comment"),
     #sitemap
     url(r'^sitemap.xml$', cache_page(sitemap_views.sitemap, CACHE_TIME),{'sitemaps': sitemaps},name='sitemap'),
+    
+    #xmp rpc
+    url(r'^rpc$',xmlrpc.xmlrpc_handler,name='xmlrpc'),
 )
 
+
+urlpatterns += patterns('django.views.generic.simple',
+    (r'^robots.txt', 'direct_to_template', {'template': 'robots.txt'}),
+)
 
 urlpatterns += patterns('',
     url(r'^wap$',wap.index,name='wap_index'),
@@ -48,5 +57,6 @@ urlpatterns += patterns('',
      url(r'^admin/settings',admin.blog_settings,name='settings'),
      url(r'^weibo/bind$',admin.bind_sina_weibo,name='bind_weibo'),
      url(r'^weibo/bind_callback/$', admin.bind_callback, name='bind_callback'),
-     url(r'^weibo/unbind$',admin.unbind_weibo,name='unbind_weibo'),          
+     url(r'^weibo/unbind$',admin.unbind_weibo,name='unbind_weibo'),
+     url(r'^themes$',admin.themes,name='themes'),       
 )
