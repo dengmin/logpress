@@ -34,6 +34,7 @@ def _get_referer_url(request):
         referer_url = '/'
     return referer_url
 
+
 @login_required
 def bind_sina_weibo(request):
     back_to_url = _get_referer_url(request)
